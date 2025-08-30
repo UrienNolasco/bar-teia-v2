@@ -13,3 +13,109 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum ProductCategory {
+  BEBIDAS
+  SNACKS
+  DOCES
+  SALGADOS
+  OUTROS
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  DELIVERED
+}
+
+enum TransactionStatus {
+  COMPLETED
+  PENDING
+  FAILED
+}
+
+model User {
+  id              String           @id @default(cuid())
+  abacatePayCustomerId String?     @unique // ID do cliente no gateway de pagamento. É opcional e único.
+  email           String           @unique
+  fullName        String
+  role            Role             @default(USER)
+  credits         Decimal          @default(0)
+
+  orders          Order[]
+  creditPurchases CreditPurchase[]
+
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model Product {
+  id              String           @id @default(cuid())
+  name            String           @unique
+  description     String?
+  price           Decimal
+  imageUrl        String?
+  category        ProductCategory
+  stock           Int              @default(0)
+  isAvailable     Boolean          @default(true)
+
+  orderItems      OrderItem[]      // Um produto pode estar em vários itens de pedido.
+
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model Order {
+  id              String           @id @default(cuid())
+  customerRoom    String
+  totalAmount     Decimal
+  status          OrderStatus      @default(PENDING)
+
+  // Relacionamento com User: Cada pedido pertence a um usuário.
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+
+  // Relacionamento com OrderItem: Um pedido é composto por vários itens.
+  items           OrderItem[]
+
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+// Tabela de Junção: Conecta Order e Product
+model OrderItem {
+  id              String           @id @default(cuid())
+  
+  // Relacionamento com Order
+  orderId         String
+  order           Order            @relation(fields: [orderId], references: [id])
+
+  // Relacionamento com Product
+  productId       String
+  product         Product          @relation(fields: [productId], references: [id])
+  
+  quantity        Int
+  
+  // É crucial salvar o preço no momento da compra, pois o preço do produto pode mudar no futuro.
+  priceAtPurchase Decimal 
+
+  @@unique([orderId, productId], name: "order_product_unique") // Garante que um produto não se repita no mesmo pedido.
+}
+
+model CreditPurchase {
+  id              String           @id @default(cuid())
+  amount          Decimal
+  paymentMethod   String           // Ex: "simulated_credit_card"
+  status          TransactionStatus @default(COMPLETED)
+
+  // Relacionamento com User: Cada compra de crédito pertence a um usuário.
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+
+  createdAt       DateTime         @default(now())
+}

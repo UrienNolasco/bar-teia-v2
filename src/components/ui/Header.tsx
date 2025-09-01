@@ -17,10 +17,10 @@ export function Header() {
     <header className="flex items-center justify-between p-4 bg-card shadow-md">
       <div className="flex items-center space-x-4">
         <Image
-          src="/logoteiapng.png"
+          src="/logoteia.svg"
           alt="Bar da Teia Logo"
-          width={80}
-          height={80}
+          width={40}
+          height={40}
         />
         <div>
           <h1 className="text-lg font-bold">Bar da Teia</h1>

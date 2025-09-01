@@ -1,7 +1,7 @@
 "use client";
 
-import { OverviewCard } from "@/components/ui/OverviewCard";
 import { NovoProdutoDialog } from "@/components/gerenciar/NovoProdutoDialog";
+import { OverviewCard } from "@/components/gerenciar/OverviewCard";
 import { Input } from "@/components/ui/input";
 import { Box, CheckCircle, AlertTriangle, XCircle, Coins } from "lucide-react";
 
@@ -22,7 +22,11 @@ export default function GerenciarPage() {
         <OverviewCard title="Produtos Ativos" value="6" icon={CheckCircle} />
         <OverviewCard title="Estoque Baixo" value="2" icon={AlertTriangle} />
         <OverviewCard title="Sem Estoque" value="1" icon={XCircle} />
-        <OverviewCard title="Valor Total do Estoque" value="R$ 120,00" icon={Coins} />
+        <OverviewCard
+          title="Valor Total do Estoque"
+          value="R$ 120,00"
+          icon={Coins}
+        />
       </div>
 
       <div className="bg-card p-4 rounded-lg shadow-md">

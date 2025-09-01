@@ -10,12 +10,9 @@ export function CartIcon() {
 
   return (
     <div className="relative">
-      <ShoppingCart className="w-6 h-6 text-foreground" />
+      <ShoppingCart className="w-6 h-6 text-foreground " />
       {totalItems > 0 && (
-        <Badge
-          variant="destructive"
-          className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center p-0 text-xs"
-        >
+        <Badge className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center p-0 text-xs bg-green-500 rounded-full">
           {totalItems}
         </Badge>
       )}

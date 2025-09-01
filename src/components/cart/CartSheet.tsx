@@ -27,7 +27,10 @@ export function CartSheet() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="sm" className="relative">
+        <Button
+          className="w-14 h-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 bg-card hover:bg-primary/90"
+          size="icon"
+        >
           <CartIcon />
         </Button>
       </SheetTrigger>
@@ -52,7 +55,7 @@ export function CartSheet() {
                 </p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="p-4">
                 {items.map((item) => (
                   <CartItem
                     key={item.product.id}
@@ -66,7 +69,7 @@ export function CartSheet() {
 
           {/* Resumo e Botões */}
           {items.length > 0 && (
-            <div className="border-t pt-4 space-y-4">
+            <div className="border-t pt-4 space-y-4 p-4">
               {/* Total */}
               <div className="flex justify-between items-center text-lg font-bold">
                 <span>Total:</span>

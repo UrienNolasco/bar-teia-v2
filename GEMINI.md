@@ -15,8 +15,9 @@ This is a full-stack web application built with Next.js (version 15) and TypeScr
 
 ## Development Conventions
 
-- **Database Schema**: The database schema is defined in `prisma/schema.prisma`. After modifying this file, you need to run `npx prisma migrate dev` to apply the changes to the database and `npx prisma generate` to update the Prisma Client.
+- **Database Schema**: The database schema is defined in `prisma/schema.prisma`. 
 - **Environment Variables**: Database connection and other secrets are managed through a `.env` file. The `DATABASE_URL` is a required variable.
 - **Styling**: Utility classes from Tailwind CSS are used for styling. The `tailwind-merge` and `clsx` packages are available to help manage conditional and conflicting classes.
 - **Components**: The main application page is `src/app/page.tsx` and the main layout is `src/app/layout.tsx`. Reusable components should be created within the `src/components` directory (which is a common convention, though not yet created).
-
+- **PWA**: Its a PWA APP so Mobile First and Always.
+- **TIPING**: We are using TypeScript so create a type folder to add all the tiping interfaces.

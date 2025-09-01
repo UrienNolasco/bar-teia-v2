@@ -21,3 +21,4 @@ This is a full-stack web application built with Next.js (version 15) and TypeScr
 - **Components**: The main application page is `src/app/page.tsx` and the main layout is `src/app/layout.tsx`. Reusable components should be created within the `src/components` directory (which is a common convention, though not yet created).
 - **PWA**: Its a PWA APP so Mobile First and Always.
 - **TIPING**: We are using TypeScript so create a type folder to add all the tiping interfaces.
+- **Theming**: The project uses `next-themes` for theme management. The color palette is defined in `src/app/globals.css` with CSS variables, and the configuration is in `tailwind.config.ts`. The `ThemeProvider` component in `src/components/theme-provider.tsx` wraps the application.

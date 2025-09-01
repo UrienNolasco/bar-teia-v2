@@ -13,9 +13,12 @@ import { CartItem } from "./CartItem";
 import { useCart } from "@/contexts/CartContext";
 import { ShoppingBag } from "lucide-react";
 
+
 export function CartSheet() {
   const { items, getTotalPrice, clearCart } = useCart();
   const totalPrice = getTotalPrice();
+
+
 
   const handleConfirmPurchase = () => {
     // Aqui você pode implementar a lógica de confirmação da compra

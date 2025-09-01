@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { CartProvider } from "@/contexts/CartContext";
 import { FloatingCart } from "@/components/cart/FloatingCart";
 import { Header } from "@/components/ui/Header";
+import AuthProvider from "@/providers/auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,20 +34,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Toaster />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <CartProvider>
-            <Header />
-            <main className="flex-1 pb-16">{children}</main>
-            <BottomNav />
-            <FloatingCart />
-          </CartProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <Toaster />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <CartProvider>
+              <Header />
+              <main className="flex-1 pb-16">{children}</main>
+              <BottomNav />
+              <FloatingCart />
+            </CartProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

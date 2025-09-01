@@ -47,65 +47,77 @@ export function ProductCard({ product }: ProductCardProps) {
     }
   };
 
+  const getBadgeColor = (category: ProductCategory) => {
+    if (category === ProductCategory.BEBIDA) return "bg-orange-500 opacity-50";
+    if (category === ProductCategory.AGUA) return "bg-blue-500 opacity-50";
+    if (category === ProductCategory.REFRIGERANTE)
+      return "bg-red-500 opacity-50";
+    return "bg-gray-500";
+  };
+
   return (
-    <Card className="overflow-hidden hover:shadow-md transition-shadow">
+    <Card className="overflow-hidden hover:shadow-xl transition-all duration-200 hover:scale-[1.02] border-2 shadow-md">
       {/* Imagem do Produto */}
-      <div className="aspect-square relative">
+      <div className="aspect-square relative w-full max-h-48 bg-gradient-to-br from-muted/20 to-muted/10">
         {product.imageUrl ? (
           <Image
             src={product.imageUrl}
             alt={product.name}
             fill
-            className="object-cover"
+            className="object-contain"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center">
               <span className="text-2xl">🍺</span>
             </div>
           </div>
         )}
       </div>
 
-      <CardContent className="p-4 space-y-3">
+      <CardContent className="p-3 space-y-3">
         {/* Nome e Categoria */}
-        <div className="flex justify-between items-start">
-          <h3 className="font-semibold text-foreground text-sm leading-tight">
-            {product.name}
-          </h3>
-          <Badge
-            variant="secondary"
-            className="text-xs bg-blue-100 text-blue-800"
-          >
-            {getCategoryLabel(product.category)}
-          </Badge>
-        </div>
+        <div className="space-y-1.5">
+          <div className="flex justify-between items-start gap-2">
+            <h3 className="font-bold text-foreground leading-tight flex-1 text-lg">
+              {product.name}
+            </h3>
+            <Badge
+              variant="secondary"
+              className={`text-xs flex-shrink-0 text-white ${getBadgeColor(
+                product.category
+              )}`}
+            >
+              {getCategoryLabel(product.category)}
+            </Badge>
+          </div>
 
-        {/* Descrição */}
-        {product.description && (
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            {product.description}
-          </p>
-        )}
+          {/* Descrição */}
+          {product.description && (
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {product.description}
+            </p>
+          )}
+        </div>
 
         {/* Preço e Quantidade */}
         <div className="flex justify-between items-center">
           <span className="text-lg font-bold text-foreground">
             R$ {product.price.toFixed(2)}
           </span>
-          <span className="text-xs text-green-600 font-medium">
+          <span className="text-sm font-medium text-green-500">
             {product.stock} disponíveis
           </span>
         </div>
 
         {/* Botão Adicionar */}
         <Button
-          className="w-full text-white"
+          className="w-full font-semibold"
           disabled={!product.isAvailable || product.stock === 0}
           onClick={handleAddToCart}
         >
           <Plus className="w-4 h-4 mr-2" />
-          Adicionar
+          Adicionar ao Carrinho
         </Button>
       </CardContent>
     </Card>

@@ -45,7 +45,7 @@ export function CartSheet() {
 
         <div className="flex flex-col h-full">
           {/* Lista de Produtos */}
-          <div className="flex-1 overflow-y-auto py-4">
+          <div className="flex-1 overflow-y-auto">
             {items.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center">
                 <ShoppingBag className="w-16 h-16 text-muted-foreground mb-4" />
@@ -55,7 +55,7 @@ export function CartSheet() {
                 </p>
               </div>
             ) : (
-              <div className="p-4">
+              <div className="p-4 space-y-4">
                 {items.map((item) => (
                   <CartItem
                     key={item.product.id}

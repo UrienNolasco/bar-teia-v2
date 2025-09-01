@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { CartSheet } from "@/components/cart/CartSheet";
 
 export function Header() {
   const [user] = useState<UserType | null>({
@@ -42,7 +41,6 @@ export function Header() {
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <CartSheet />
         <Sheet>
           <SheetTrigger>
             <User className="h-6 w-6" />

@@ -5,8 +5,7 @@ import { BottomNav } from "@/components/ui/BottomNav";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { CartProvider } from "@/contexts/CartContext";
-
-
+import { FloatingCart } from "@/components/cart/FloatingCart";
 import { Header } from "@/components/ui/Header";
 
 const geistSans = Geist({
@@ -45,7 +44,7 @@ export default function RootLayout({
             <Header />
             <main className="flex-1 pb-16">{children}</main>
             <BottomNav />
-            
+            <FloatingCart />
           </CartProvider>
         </ThemeProvider>
       </body>

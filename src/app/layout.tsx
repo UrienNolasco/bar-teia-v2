@@ -4,6 +4,8 @@ import "./globals.css";
 import { BottomNav } from "@/components/ui/BottomNav";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { CartProvider } from "@/contexts/CartContext";
+
 
 import { Header } from "@/components/ui/Header";
 
@@ -39,9 +41,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="flex-1 pb-16">{children}</main>
-          <BottomNav />
+          <CartProvider>
+            <Header />
+            <main className="flex-1 pb-16">{children}</main>
+            <BottomNav />
+            
+          </CartProvider>
         </ThemeProvider>
       </body>
     </html>

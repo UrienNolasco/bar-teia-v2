@@ -1,3 +1,5 @@
+'use server';
+
 import { PrismaClient } from '@prisma/client';
 import { ProductCreateInput } from '@/types/product';
 

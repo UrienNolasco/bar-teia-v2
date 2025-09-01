@@ -19,11 +19,10 @@ enum Role {
 }
 
 enum ProductCategory {
-  BEBIDAS
-  SNACKS
-  DOCES
-  SALGADOS
-  OUTROS
+  BEBIDA
+  SUCO
+  REFRIGERANTE
+  AGUA
 }
 
 enum OrderStatus {

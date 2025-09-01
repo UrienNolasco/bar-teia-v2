@@ -117,9 +117,10 @@ export function NovoProdutoDialog() {
                 <SelectValue placeholder="Selecione uma categoria" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="bebidas">Bebidas</SelectItem>
-                <SelectItem value="refrigerante">Refrigerante</SelectItem>
-                <SelectItem value="suco">Suco</SelectItem>
+                <SelectItem value="BEBIDA">Bebidas</SelectItem>
+                <SelectItem value="SUCO">Sucos</SelectItem>
+                <SelectItem value="REFRIGERANTE">Refrigerantes</SelectItem>
+                <SelectItem value="AGUA">Água</SelectItem>
               </SelectContent>
             </Select>
           </div>

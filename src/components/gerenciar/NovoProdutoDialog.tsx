@@ -1,3 +1,6 @@
+"use client";
+
+import { createProduct } from "@/actions/products/create-product";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,13 +13,42 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 
 export function NovoProdutoDialog() {
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [stock, setStock] = useState("");
+  const [category, setCategory] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [isAvailable, setisAvailable] = useState(true);
+
+  const handleCreateProduct = async () => {
+    await createProduct({
+      name,
+      description,
+      price: parseFloat(price),
+      stock: parseInt(stock),
+      category,
+      imageUrl,
+      isAvailable,
+    });
+    setOpen(false);
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
           <Plus className="mr-2 h-4 w-4" /> Novo Produto
@@ -34,56 +66,93 @@ export function NovoProdutoDialog() {
             <Label htmlFor="name" className="text-right">
               Nome
             </Label>
-            <Input id="name" className="col-span-3" />
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="col-span-3"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="description" className="text-right">
               Descrição
             </Label>
-            <Input id="description" className="col-span-3" />
+            <Input
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="col-span-3"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="price" className="text-right">
               Preço (R$)
             </Label>
-            <Input id="price" type="number" className="col-span-3" />
+            <Input
+              id="price"
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="col-span-3"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="stock" className="text-right">
               Estoque
             </Label>
-            <Input id="stock" type="number" className="col-span-3" />
+            <Input
+              id="stock"
+              type="number"
+              value={stock}
+              onChange={(e) => setStock(e.target.value)}
+              className="col-span-3"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="category" className="text-right">
               Categoria
             </Label>
-            <Select>
+            <Select onValueChange={setCategory}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Selecione uma categoria" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="bebidas">Bebidas</SelectItem>
-                <SelectItem value="snacks">Snacks</SelectItem>
-                <SelectItem value="doces">Doces</SelectItem>
+                <SelectItem value="refrigerante">Refrigerante</SelectItem>
+                <SelectItem value="suco">Suco</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="imageUrl" className="text-right">
-              URL da Imagem
-            </Label>
-            <Input id="imageUrl" className="col-span-3" />
+            <Label htmlFor="imageUrl">URL da Imagem</Label>
+            <Input
+              id="imageUrl"
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              className="col-span-3"
+            />
           </div>
-          <div className="flex items-center space-x-2 justify-end">
-            <Switch id="disponivel" defaultChecked />
-            <Label htmlFor="disponivel">Produto Disponível</Label>
+          <div className="flex flex-col items-start space-y-1">
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="disponivel"
+                checked={isAvailable}
+                onCheckedChange={setisAvailable}
+              />
+              <Label htmlFor="disponivel">Produto Disponível</Label>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Desative para ocultar o produto
+            </p>
           </div>
-            <p className="text-sm text-muted-foreground text-right">Desative para ocultar o produto</p>
         </div>
         <DialogFooter>
-          <Button variant="outline">Cancelar</Button>
-          <Button type="submit">Criar</Button>
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            Cancelar
+          </Button>
+          <Button type="submit" onClick={handleCreateProduct}>
+            Criar
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

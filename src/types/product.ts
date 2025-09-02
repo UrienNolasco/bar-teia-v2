@@ -1,4 +1,4 @@
-import { ProductCategory } from "@/generated/prisma";
+import { ProductCategory } from "@prisma/client";
 
 export interface Product {
   id: string;

@@ -24,23 +24,30 @@ import { Switch } from "@/components/ui/switch";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
-export function NovoProdutoDialog() {
+import { ProductCategory } from "@prisma/client";
+
+interface NovoProdutoDialogProps {
+  categories: ProductCategory[];
+}
+
+export function NovoProdutoDialog({ categories }: NovoProdutoDialogProps) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState<ProductCategory | "">("");
   const [imageUrl, setImageUrl] = useState("");
   const [isAvailable, setisAvailable] = useState(true);
 
   const handleCreateProduct = async () => {
+    if (!category) return;
     await createProduct({
       name,
       description,
       price: parseFloat(price),
       stock: parseInt(stock),
-      category,
+      category: category,
       imageUrl,
       isAvailable,
     });
@@ -112,15 +119,16 @@ export function NovoProdutoDialog() {
             <Label htmlFor="category" className="text-right">
               Categoria
             </Label>
-            <Select onValueChange={setCategory}>
+            <Select onValueChange={(value) => setCategory(value as ProductCategory)}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Selecione uma categoria" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="BEBIDA">Bebidas</SelectItem>
-                <SelectItem value="SUCO">Sucos</SelectItem>
-                <SelectItem value="REFRIGERANTE">Refrigerantes</SelectItem>
-                <SelectItem value="AGUA">Água</SelectItem>
+                {categories.map((cat) => (
+                  <SelectItem key={cat} value={cat}>
+                    {cat}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

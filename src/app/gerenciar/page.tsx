@@ -1,11 +1,17 @@
 import { NovoProdutoDialog } from "@/components/gerenciar/NovoProdutoDialog";
 import { OverviewCard } from "@/components/gerenciar/OverviewCard";
-import { Input } from "@/components/ui/input";
 import { getOverviewCardData } from "@/actions/products/read-overview-cards-data";
+import { updateProduct } from "@/actions/products/update-product";
+import { deleteProduct } from "@/actions/products/delete-product";
+import { EditableProductCard } from "@/components/gerenciar/EditableProductCard";
 import { Box, CheckCircle, AlertTriangle, XCircle, Coins } from "lucide-react";
+import { ProductCategory } from "@prisma/client";
+import { getProducts } from "@/actions/products/read-products";
 
 export default async function GerenciarPage() {
   const overviewData = await getOverviewCardData();
+  const products = await getProducts();
+  const categories = Object.values(ProductCategory);
 
   return (
     <div className="p-4 space-y-4">
@@ -16,13 +22,31 @@ export default async function GerenciarPage() {
         </p>
       </div>
 
-      <NovoProdutoDialog />
+      <NovoProdutoDialog categories={categories} />
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-        <OverviewCard title="Total de Produtos" value={overviewData.totalProducts.toString()} icon={Box} />
-        <OverviewCard title="Produtos Ativos" value={overviewData.activeProducts.toString()} icon={CheckCircle} />
-        <OverviewCard title="Estoque Baixo" value={overviewData.lowStockProducts.toString()} icon={AlertTriangle} valueClassName="text-orange-500" />
-        <OverviewCard title="Sem Estoque" value={overviewData.outOfStockProducts.toString()} icon={XCircle} valueClassName="text-red-500" />
+        <OverviewCard
+          title="Total de Produtos"
+          value={overviewData.totalProducts.toString()}
+          icon={Box}
+        />
+        <OverviewCard
+          title="Produtos Ativos"
+          value={overviewData.activeProducts.toString()}
+          icon={CheckCircle}
+        />
+        <OverviewCard
+          title="Estoque Baixo"
+          value={overviewData.lowStockProducts.toString()}
+          icon={AlertTriangle}
+          valueClassName="text-orange-500"
+        />
+        <OverviewCard
+          title="Sem Estoque"
+          value={overviewData.outOfStockProducts.toString()}
+          icon={XCircle}
+          valueClassName="text-red-500"
+        />
         <OverviewCard
           title="Valor Total do Estoque"
           value={`R$ ${overviewData.totalStockValue.toFixed(2)}`}
@@ -30,13 +54,16 @@ export default async function GerenciarPage() {
         />
       </div>
 
-      <div className="bg-card p-4 rounded-lg shadow-md">
-        <Input placeholder="Buscar produtos" />
-      </div>
-
-      {/* Placeholder for product list */}
-      <div className="bg-card p-4 rounded-lg shadow-md">
-        <p>Lista de produtos...</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {products.map((product) => (
+          <EditableProductCard
+            key={product.id}
+            product={product}
+            categories={categories}
+            onUpdate={updateProduct}
+            onDelete={deleteProduct}
+          />
+        ))}
       </div>
     </div>
   );

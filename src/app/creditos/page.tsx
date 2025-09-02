@@ -1,7 +1,6 @@
-import Footer from "@/components/creditos/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
-import { Plus, PlusCircle, Wallet } from "lucide-react";
+import { PlusCircle, Wallet } from "lucide-react";
 
 export default function CreditosPage() {
   return (

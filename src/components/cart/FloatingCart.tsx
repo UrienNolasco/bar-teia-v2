@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { CartIcon } from "@/components/CartIcon";
 import { CartSheet } from "./CartSheet";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/lib/utils";

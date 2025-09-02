@@ -1,13 +1,20 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
 
 interface OverviewCardProps {
   title: string;
   value: string;
   icon: LucideIcon;
+  valueClassName?: string;
 }
 
-export function OverviewCard({ title, value, icon: Icon }: OverviewCardProps) {
+export function OverviewCard({
+  title,
+  value,
+  icon: Icon,
+  valueClassName,
+}: OverviewCardProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -17,7 +24,7 @@ export function OverviewCard({ title, value, icon: Icon }: OverviewCardProps) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
+        <div className={cn("text-2xl font-bold", valueClassName)}>{value}</div>
       </CardContent>
     </Card>
   );

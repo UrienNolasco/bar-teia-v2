@@ -48,10 +48,9 @@ export function ProductCard({ product }: ProductCardProps) {
   };
 
   const getBadgeColor = (category: ProductCategory) => {
-    if (category === ProductCategory.BEBIDA) return "bg-orange-500 opacity-50";
-    if (category === ProductCategory.AGUA) return "bg-blue-500 opacity-50";
-    if (category === ProductCategory.REFRIGERANTE)
-      return "bg-red-500 opacity-50";
+    if (category === ProductCategory.BEBIDA) return "bg-orange-500/50";
+    if (category === ProductCategory.AGUA) return "bg-blue-500/50";
+    if (category === ProductCategory.REFRIGERANTE) return "bg-red-500/50";
     return "bg-gray-500";
   };
 

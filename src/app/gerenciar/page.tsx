@@ -1,11 +1,12 @@
-"use client";
-
 import { NovoProdutoDialog } from "@/components/gerenciar/NovoProdutoDialog";
 import { OverviewCard } from "@/components/gerenciar/OverviewCard";
 import { Input } from "@/components/ui/input";
+import { getOverviewCardData } from "@/actions/products/read-overview-cards-data";
 import { Box, CheckCircle, AlertTriangle, XCircle, Coins } from "lucide-react";
 
-export default function GerenciarPage() {
+export default async function GerenciarPage() {
+  const overviewData = await getOverviewCardData();
+
   return (
     <div className="p-4 space-y-4">
       <div>
@@ -18,13 +19,13 @@ export default function GerenciarPage() {
       <NovoProdutoDialog />
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-        <OverviewCard title="Total de Produtos" value="8" icon={Box} />
-        <OverviewCard title="Produtos Ativos" value="6" icon={CheckCircle} />
-        <OverviewCard title="Estoque Baixo" value="2" icon={AlertTriangle} />
-        <OverviewCard title="Sem Estoque" value="1" icon={XCircle} />
+        <OverviewCard title="Total de Produtos" value={overviewData.totalProducts.toString()} icon={Box} />
+        <OverviewCard title="Produtos Ativos" value={overviewData.activeProducts.toString()} icon={CheckCircle} />
+        <OverviewCard title="Estoque Baixo" value={overviewData.lowStockProducts.toString()} icon={AlertTriangle} valueClassName="text-orange-500" />
+        <OverviewCard title="Sem Estoque" value={overviewData.outOfStockProducts.toString()} icon={XCircle} valueClassName="text-red-500" />
         <OverviewCard
           title="Valor Total do Estoque"
-          value="R$ 120,00"
+          value={`R$ ${overviewData.totalStockValue.toFixed(2)}`}
           icon={Coins}
         />
       </div>

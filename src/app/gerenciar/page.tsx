@@ -58,7 +58,10 @@ export default async function GerenciarPage() {
         {products.map((product) => (
           <EditableProductCard
             key={product.id}
-            product={product}
+            product={{
+              ...product,
+              price: parseFloat(product.price.toString()),
+            }}
             categories={categories}
             onUpdate={updateProduct}
             onDelete={deleteProduct}

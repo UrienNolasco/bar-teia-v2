@@ -1,3 +1,5 @@
+"use server";
+
 import { PrismaClient } from "@prisma/client";
 import { ProductUpdateInput } from "@/types/product";
 
@@ -9,7 +11,11 @@ export async function updateProduct(id: string, data: ProductUpdateInput) {
       where: { id },
       data,
     });
-    return product;
+    const { price, ...rest } = product;
+    return {
+      ...rest,
+      price: price.toNumber(),
+    };
   } catch (error) {
     console.error(`Error updating product with ID ${id}:`, error);
     throw new Error("Failed to update product.");

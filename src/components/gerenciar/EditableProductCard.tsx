@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Product, ProductUpdateInput } from "@/types/product";
 import { ProductCategory } from "@prisma/client";
 import { motion, AnimatePresence } from "framer-motion";
@@ -30,16 +30,17 @@ import Image from "next/image";
 interface EditableProductCardProps {
   product: Product;
   categories: ProductCategory[];
-  onUpdate: (id: string, data: ProductUpdateInput) => Promise<any>;
+  onUpdate: (id: string, data: ProductUpdateInput) => Promise<Product>;
   onDelete: (id: string) => Promise<void>;
 }
 
 export function EditableProductCard({
-  product,
+  product: initialProduct,
   categories,
   onUpdate,
   onDelete,
 }: EditableProductCardProps) {
+  const [product, setProduct] = useState(initialProduct);
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -52,6 +53,25 @@ export function EditableProductCard({
     isAvailable: product.isAvailable,
     imageUrl: product.imageUrl,
   });
+
+  useEffect(() => {
+    setProduct(initialProduct);
+  }, [initialProduct]);
+
+  useEffect(() => {
+    if (!isEditing) {
+      setFormData({
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        category: product.category,
+        stock: product.stock,
+        isAvailable: product.isAvailable,
+        imageUrl: product.imageUrl,
+      });
+    }
+  }, [product, isEditing]);
+
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -89,7 +109,10 @@ export function EditableProductCard({
         price: Number(formData.price),
         stock: Number(formData.stock),
       };
-      await onUpdate(product.id, updatedData);
+      const updatedProduct = await onUpdate(product.id, updatedData);
+      if (updatedProduct) {
+        setProduct(updatedProduct);
+      }
       setIsEditing(false);
     } catch (error) {
       console.error("Failed to update product:", error);
@@ -238,11 +261,12 @@ export function EditableProductCard({
             className="flex flex-col h-full"
           >
             <CardHeader>
-              <div className="aspect-w-16 aspect-h-9 mb-4">
+              <div className="aspect-square relative w-full max-h-48 bg-gradient-to-br from-muted/20 to-muted/10">
                 <Image
-                  src={product.imageUrl}
+                  src={product.imageUrl ?? '/placeholder.png'}
                   alt={product.name}
-                  className="object-cover rounded-t-lg w-full h-32"
+                  fill
+                  className="object-contain"
                 />
               </div>
               <CardTitle>{product.name}</CardTitle>

@@ -1,6 +1,7 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import { ProductUpdateInput } from "@/types/product";
 
 const prisma = new PrismaClient();
@@ -11,6 +12,9 @@ export async function updateProduct(id: string, data: ProductUpdateInput) {
       where: { id },
       data,
     });
+
+    revalidatePath("/gerenciar");
+
     const { price, ...rest } = product;
     return {
       ...rest,

@@ -27,14 +27,14 @@ export function MetricCard({
     : `${change.toFixed(1)}%`;
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
-        <Icon className={cn("h-4 w-4", iconColor)} />
+    <Card className="p-3">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0 pb-2">
+        <CardTitle className="text-xs font-medium">{title}</CardTitle>
+        <Icon className={cn("h-3 w-3", iconColor)} />
       </CardHeader>
-      <CardContent>
-        <div className={cn("text-2xl font-bold", valueColor)}>{value}</div>
-        <p className="text-xs text-muted-foreground">
+      <CardContent className="p-0">
+        <div className={cn("text-lg font-bold", valueColor)}>{value}</div>
+        <p className="text-xs text-muted-foreground mt-1">
           {changeText} {changeLabel}
         </p>
       </CardContent>

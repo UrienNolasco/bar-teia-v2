@@ -67,17 +67,17 @@ export function TopClientsCard({ topClients }: TopClientsCardProps) {
 
   return (
     <Card className="w-full">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-3 sm:space-y-0 pb-4">
         <div className="flex items-center space-x-2">
           <Trophy className="h-5 w-5 text-yellow-500" />
-          <CardTitle className="text-lg font-semibold">
+          <CardTitle className="text-base font-semibold">
             TOP 5 Clientes
           </CardTitle>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 w-full sm:w-auto">
           <Calendar className="h-4 w-4 text-muted-foreground" />
           <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-            <SelectTrigger className="w-32">
+            <SelectTrigger className="w-28">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -89,7 +89,7 @@ export function TopClientsCard({ topClients }: TopClientsCardProps) {
             </SelectContent>
           </Select>
           <Select value={selectedYear} onValueChange={setSelectedYear}>
-            <SelectTrigger className="w-24">
+            <SelectTrigger className="w-20">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -104,21 +104,21 @@ export function TopClientsCard({ topClients }: TopClientsCardProps) {
       </CardHeader>
       <CardContent>
         {topClients.length === 0 ? (
-          <div className="text-center py-8">
-            <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground">
+          <div className="text-center py-6">
+            <Users className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
+            <p className="text-sm text-muted-foreground">
               Nenhum cliente encontrado para este período
             </p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {topClients.map((client, index) => (
               <div
                 key={client.userId}
-                className="flex items-center justify-between p-3 rounded-lg border bg-card hover:bg-accent/50 transition-colors"
+                className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-lg border bg-card hover:bg-accent/50 transition-colors space-y-2 sm:space-y-0"
               >
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white text-sm font-bold">
+                  <div className="flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white text-xs font-bold">
                     {getRankIcon(index)}
                   </div>
                   <div>
@@ -129,8 +129,8 @@ export function TopClientsCard({ topClients }: TopClientsCardProps) {
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-4">
-                  <div className="text-right">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                  <div className="text-left sm:text-right">
                     <div className="flex items-center space-x-1">
                       <TrendingUp className="h-3 w-3 text-green-500" />
                       <Badge variant="secondary" className="text-xs">
@@ -141,8 +141,8 @@ export function TopClientsCard({ topClients }: TopClientsCardProps) {
                       Média: {formatCurrency(client.averageOrderValue)}
                     </p>
                   </div>
-                  <div className="text-right">
-                    <p className="font-bold text-lg text-green-600">
+                  <div className="text-left sm:text-right">
+                    <p className="font-bold text-base text-green-600">
                       {formatCurrency(client.totalSpent)}
                     </p>
                     <p className="text-xs text-muted-foreground">Total gasto</p>
@@ -153,13 +153,13 @@ export function TopClientsCard({ topClients }: TopClientsCardProps) {
           </div>
         )}
 
-        <div className="mt-6 pt-4 border-t">
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
+        <div className="mt-4 pt-3 border-t">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-muted-foreground space-y-1 sm:space-y-0">
             <span>
-              Período selecionado: {months[parseInt(selectedMonth) - 1]?.label}{" "}
+              Período: {months[parseInt(selectedMonth) - 1]?.label}{" "}
               {selectedYear}
             </span>
-            <span>Total de clientes: {topClients.length}</span>
+            <span>Total: {topClients.length} clientes</span>
           </div>
         </div>
       </CardContent>

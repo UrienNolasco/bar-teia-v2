@@ -11,20 +11,21 @@ import { Button } from "@/components/ui/button";
 import { CartIcon } from "@/components/CartIcon";
 import { CartItem } from "./CartItem";
 import { useCart } from "@/contexts/CartContext";
+import { useAuth } from "@/hooks/useAuth";
 import { ShoppingBag } from "lucide-react";
-
 
 export function CartSheet() {
   const { items, getTotalPrice, clearCart } = useCart();
+  const { requireAuth } = useAuth();
   const totalPrice = getTotalPrice();
 
-
-
   const handleConfirmPurchase = () => {
-    // Aqui você pode implementar a lógica de confirmação da compra
-    console.log("Confirmando compra:", items);
-    // Por enquanto, apenas limpa o carrinho
-    clearCart();
+    requireAuth(() => {
+      // Aqui você pode implementar a lógica de confirmação da compra
+      console.log("Confirmando compra:", items);
+      // Por enquanto, apenas limpa o carrinho
+      clearCart();
+    });
   };
 
   return (

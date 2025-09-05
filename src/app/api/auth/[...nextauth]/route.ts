@@ -12,13 +12,33 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    session: async ({ session, user }) => {
+      if (user) {
+        // Buscar dados atualizados do usuário incluindo créditos
+        const userData = await prisma.user.findUnique({
+          where: { id: user.id },
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            image: true,
+            credits: true,
+            role: true,
+          },
+        });
+
+        return {
+          ...session,
+          user: {
+            ...session.user,
+            id: userData?.id || user.id,
+            credits: userData?.credits || 0,
+            role: userData?.role || "USER",
+          },
+        };
+      }
+      return session;
+    },
     jwt: ({ token, user }) => {
       if (user) {
         token.id = user.id;

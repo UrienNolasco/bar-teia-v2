@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 import { ProductCategory } from "@prisma/client";
+import { useAuth } from "@/hooks/useAuth";
 
 interface Product {
   id: string;
@@ -35,22 +36,25 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const { requireAuth } = useAuth();
 
   const addToCart = (product: Product) => {
-    setItems((prevItems) => {
-      const existingItem = prevItems.find(
-        (item) => item.product.id === product.id
-      );
-
-      if (existingItem) {
-        return prevItems.map((item) =>
-          item.product.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+    requireAuth(() => {
+      setItems((prevItems) => {
+        const existingItem = prevItems.find(
+          (item) => item.product.id === product.id
         );
-      } else {
-        return [...prevItems, { product, quantity: 1 }];
-      }
+
+        if (existingItem) {
+          return prevItems.map((item) =>
+            item.product.id === product.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          );
+        } else {
+          return [...prevItems, { product, quantity: 1 }];
+        }
+      });
     });
   };
 

@@ -7,6 +7,7 @@ import { ProductCategory } from "@prisma/client";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import { useCart } from "@/contexts/CartContext";
+import { AuthButton } from "@/components/AuthButton";
 
 interface Product {
   id: string;
@@ -110,14 +111,14 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Botão Adicionar */}
-        <Button
+        <AuthButton
           className="w-full font-semibold"
           disabled={!product.isAvailable || product.stock === 0}
           onClick={handleAddToCart}
         >
           <Plus className="w-4 h-4 mr-2" />
           Adicionar ao Carrinho
-        </Button>
+        </AuthButton>
       </CardContent>
     </Card>
   );

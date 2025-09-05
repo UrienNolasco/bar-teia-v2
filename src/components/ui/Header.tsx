@@ -112,10 +112,10 @@ export function Header() {
                       <CreditCard className="h-4 w-4 text-green-600 dark:text-green-400" />
                     </div>
                     <p className="text-3xl font-bold text-green-800 dark:text-green-200">
-                      R$ 0,00
+                      R$ {Number(session.user.credits || 0).toFixed(2)}
                     </p>
                     <p className="text-xs text-green-600 dark:text-green-400 mt-1">
-                      💡 Sistema de créditos em desenvolvimento
+                      💡 Saldo atualizado em tempo real
                     </p>
                     <Button
                       variant="outline"
@@ -190,7 +190,6 @@ export function Header() {
                       <div className="text-xs text-muted-foreground space-y-1">
                         <p>✨ Acesso a créditos digitais</p>
                         <p>🎯 Experiência personalizada</p>
-                        <p>⭐ Status de cliente VIP</p>
                       </div>
                     </div>
                   </div>

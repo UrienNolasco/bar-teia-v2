@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+
 import { ProductCategory } from "@prisma/client";
 import { Plus } from "lucide-react";
 import Image from "next/image";

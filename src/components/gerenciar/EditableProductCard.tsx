@@ -135,13 +135,7 @@ export function EditableProductCard({
     }
   };
 
-  const cardVariants = {
-    initial: { scale: 1, boxShadow: "0 4px 6px rgba(0,0,0,0.1)" },
-    editing: {
-      scale: 1.02,
-      boxShadow: "0 10px 15px rgba(0,0,0,0.1)",
-    },
-  };
+  
 
   return (
     <Card
